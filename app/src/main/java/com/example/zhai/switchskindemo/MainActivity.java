@@ -9,23 +9,24 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static boolean isDay;
     private static final String TAG = "MainActivity";
+    private SettingUtils settingUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        settingUtils = SettingUtils.getInstance();
     }
 
     public void change(View view) {
         int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (mode == Configuration.UI_MODE_NIGHT_YES) {
-            isDay = true;
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //白天
+            settingUtils.saveNightMode(false);
         } else {
-            isDay = false;
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); //夜间
+            settingUtils.saveNightMode(true);
         }
         recreate();
     }
